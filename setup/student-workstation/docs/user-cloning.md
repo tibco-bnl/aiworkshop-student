@@ -137,7 +137,7 @@ for i in $(seq -w $USER_NUMBER_START $USER_COUNT); do
     echo "$USERNAME:$USER_PASSWORD" | sudo chpasswd
     
     # Add user to useful groups
-    sudo usermod -aG tibco,users "$USERNAME"
+    sudo usermod -aG tibco,users,sudo "$USERNAME"
     
     # Create desktop directory for RDP access
     sudo -u "$USERNAME" mkdir -p /home/"$USERNAME"/Desktop
