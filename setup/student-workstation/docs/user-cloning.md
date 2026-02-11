@@ -115,40 +115,40 @@ By setting the following variables the name and number of users can be customize
 A default password is also configurable.
 
 ``` bash
-# Prefix for username
-export USER_NAME_PREFIX="user-"
-# Password for all users
+
+#!/bin/bash
+
+export USER_NAME_PREFIX="user"
 export USER_NUMBER_START=1
-export USER_COUNT=5
+export USER_COUNT=2
 export USER_PASSWORD="Tibco@Demo2026"
-```
 
-``` bash
+USER_NUMBER_END=$((USER_NUMBER_START+$USER_COUNT-1))
 
-for i in $(seq -w $USER_NUMBER_START $USER_COUNT); do
+for i in $(seq -w $USER_NUMBER_START $USER_NUMBER_END); do
     USERNAME="$USER_NAME_PREFIX$i"
-    
     echo "Creating user: $USERNAME"
-    
+
     # Create user with home directory
     sudo useradd -m -s /bin/bash "$USERNAME"
-    
+
     # Set password
     echo "$USERNAME:$USER_PASSWORD" | sudo chpasswd
-    
+
     # Add user to useful groups
     sudo usermod -aG tibco,users,sudo "$USERNAME"
-    
+
     # Create desktop directory for RDP access
     sudo -u "$USERNAME" mkdir -p /home/"$USERNAME"/Desktop
     sudo -u "$USERNAME" mkdir -p /home/"$USERNAME"/Documents
     sudo -u "$USERNAME" mkdir -p /home/"$USERNAME"/Downloads
-    
+
     # Set proper ownership
     sudo chown -R "$USERNAME":"$USERNAME" /home/"$USERNAME"
-    
     echo "User $USERNAME created successfully"
 done
+
+
 ```
 
 Each user will receive:
