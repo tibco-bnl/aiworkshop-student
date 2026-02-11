@@ -7,12 +7,12 @@ The student workstation desktop is hosted on a virtual machine in the Microsoft 
 
 ## Virtual machine
 The virtual machine uses Linux distribution Ubuntu 24.04 pro version to allow desktop access.
-The required base software is installed using Hashicorp Packer to automate installation. Please find details of the use of this [packer-setup.md](packer-setup.md).
+The required base software is installed using Hashicorp Packer to automate installation. Please find details of the use of this [packer-setup.md](docs/packer-setup.md).
 
 
 
 ## User setup
 To enable multiple workshop attendees to use a virtual workstation multiple users will be created based on one template user.
-<br>The procedure to update and clone the template user is described in document [user-cloning.md](user-cloning.md).<br>
+<br>The procedure to update and clone the template user is described in document [user-cloning.md](docs/user-cloning.md).<br>
 The principle behind the template user is to have one linux user which is never used during workshops but is the blueprint for workshops. <br>
 During a new workshop preparation sufficient users are clone this the particular workshop. After completion of the workship these users will be deleted.
