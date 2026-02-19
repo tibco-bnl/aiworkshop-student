@@ -16,3 +16,6 @@ To enable multiple workshop attendees to use a virtual workstation multiple user
 <br>The procedure to update and clone the template user is described in document [user-cloning.md](docs/user-cloning.md).<br>
 The principle behind the template user is to have one linux user which is never used during workshops but is the blueprint for workshops. <br>
 During a new workshop preparation sufficient users are clone this the particular workshop. After completion of the workship these users will be deleted.
+
+## Flogo extensions
+Flogo extension needed for the workshop and description how to synchronize them described in document [flogo-extensions.md](docs/flogo-extension.md)
