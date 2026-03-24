@@ -1,0 +1,34 @@
+erDiagram
+    customers ||--o{ orders : "places"
+    orders ||--|{ order_items : "contains"
+    products ||--o{ order_items : "is part of"
+
+    customers {
+        INT customer_id PK
+        VARCHAR(255) company_name
+        VARCHAR(255) contact_email
+        VARCHAR(50) contact_phone
+        TEXT billing_address
+        TEXT shipping_address
+    }
+    products {
+        INT product_id PK
+        VARCHAR(255) chip_model
+        TEXT description
+        DECIMAL(10, 2) price
+        INT stock_quantity
+    }
+    orders {
+        INT order_id PK
+        INT customer_id FK
+        DATE order_date
+        DECIMAL(12, 2) total_amount
+        VARCHAR(50) status
+    }
+    order_items {
+        INT order_item_id PK
+        INT order_id FK
+        INT product_id FK
+        INT quantity
+        DECIMAL(10, 2) unit_price
+    }
