@@ -26,6 +26,8 @@
         "serverPort": "8080",
         "serverEndpointPath": "/mcp",
         "enableTLS": false,
+        "serverCertificate": "",
+        "serverPrivateKey": "",
         "authType": "None",
         "authToken": ""
       },
@@ -45,10 +47,21 @@
               "flowURI": "res://flow:GetCustomers"
             },
             "output": {
-              "toolResult": "=$.toolResult"
+              "response": {
+                "mapping": {
+                  "data": "=$.toolResult.data"
+                }
+              }
             }
           },
           "schemas": {
+            "reply": {
+              "response": {
+                "type": "json",
+                "value": "{\r\n    \"type\": \"object\",\r\n  \"properties\": {\r\n    \"data\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"type\": \"string\"\r\n    }\r\n }\r\n}",
+                "fe_metadata": "{\r\n    \"type\": \"object\",\r\n  \"properties\": {\r\n    \"data\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"type\": \"string\"\r\n    }\r\n }\r\n}"
+              }
+            },
             "output": {
               "arguments": {
                 "type": "json",
@@ -73,10 +86,21 @@
               "flowURI": "res://flow:GetProducts"
             },
             "output": {
-              "toolResult": "=$.toolResult"
+              "response": {
+                "mapping": {
+                  "data": "=$.toolResult.data"
+                }
+              }
             }
           },
           "schemas": {
+            "reply": {
+              "response": {
+                "type": "json",
+                "value": "{\r\n    \"type\": \"object\",\r\n  \"properties\": {\r\n    \"data\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"type\": \"string\"\r\n    }\r\n }\r\n}",
+                "fe_metadata": "{\r\n    \"type\": \"object\",\r\n  \"properties\": {\r\n    \"data\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"type\": \"string\"\r\n    }\r\n }\r\n}"
+              }
+            },
             "output": {
               "arguments": {
                 "type": "json",
@@ -104,10 +128,21 @@
               "arguments": "=$.arguments"
             },
             "output": {
-              "toolResult": "=$.toolResult"
+              "response": {
+                "mapping": {
+                  "data": "=$.toolResult.data"
+                }
+              }
             }
           },
           "schemas": {
+            "reply": {
+              "response": {
+                "type": "json",
+                "value": "{\r\n    \"type\": \"object\",\r\n  \"properties\": {\r\n    \"data\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"type\": \"string\"\r\n    }\r\n }\r\n}",
+                "fe_metadata": "{\r\n    \"type\": \"object\",\r\n  \"properties\": {\r\n    \"data\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"type\": \"string\"\r\n    }\r\n }\r\n}"
+              }
+            },
             "output": {
               "arguments": {
                 "type": "json",
@@ -135,10 +170,21 @@
               "arguments": "=$.arguments"
             },
             "output": {
-              "toolResult": "=$.toolResult"
+              "response": {
+                "mapping": {
+                  "data": "=$.toolResult.data"
+                }
+              }
             }
           },
           "schemas": {
+            "reply": {
+              "response": {
+                "type": "json",
+                "value": "{\r\n    \"type\": \"object\",\r\n  \"properties\": {\r\n    \"data\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"type\": \"string\"\r\n    }\r\n }\r\n}",
+                "fe_metadata": "{\r\n    \"type\": \"object\",\r\n  \"properties\": {\r\n    \"data\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"error\": {\r\n      \"type\": \"string\"\r\n    }\r\n }\r\n}"
+              }
+            },
             "output": {
               "arguments": {
                 "type": "json",
@@ -253,7 +299,7 @@
                   }
                 ],
                 "RuntimeQuery": "",
-                "State": "f188e142-fe39-4289-b20f-25b43841a437SELECT * \n  FROM public.customers \n  ORDER BY customer_id ASC;"
+                "State": "dca767ff-0f41-4b13-b63f-ec258b79cb77SELECT * \n  FROM public.customers \n  ORDER BY customer_id ASC;"
               },
               "schemas": {
                 "input": {
@@ -410,7 +456,7 @@
                   }
                 ],
                 "RuntimeQuery": "",
-                "State": "b8b74609-51da-424b-b5ac-40426463c6b0SELECT * FROM public.products\nORDER BY product_id ASC;"
+                "State": "97f607b7-9982-4692-95ee-a1d3b2dbfe33SELECT * FROM public.products\nORDER BY product_id ASC;"
               },
               "schemas": {
                 "input": {
@@ -574,7 +620,7 @@
                   }
                 ],
                 "RuntimeQuery": "",
-                "State": "237a4156-9370-4453-bcde-2ea795d08d76SELECT * FROM public.orders where customer_id=?customerid\nORDER BY order_id ASC;",
+                "State": "c2917589-d6a7-4a75-b3cd-ea29a18577b2SELECT * FROM public.orders where customer_id=?customerid\nORDER BY order_id ASC;",
                 "input": {
                   "mapping": {
                     "parameters": {
@@ -742,7 +788,7 @@
                   }
                 ],
                 "RuntimeQuery": "",
-                "State": "107824b1-4c5c-4fc5-a73a-4741be8fb36dSELECT * FROM public.order_items where order_id=?orderid\nORDER BY order_item_id ASC;",
+                "State": "3ae57ff3-1ddb-4c30-a834-eda91377410fSELECT * FROM public.order_items where order_id=?orderid\nORDER BY order_item_id ASC;",
                 "input": {
                   "mapping": {
                     "parameters": {
@@ -842,7 +888,7 @@
     {
       "name": "PostgreSQL.PostgreSQL.Password",
       "type": "string",
-      "value": "SECRET:OYsgZAwpUhnmZ3muyK4sQWpevB++j4dj"
+      "value": "SECRET:GWqneE/Ita0TvfhYiqxdmcTIXNITEv7H"
     },
     {
       "name": "PostgreSQL.PostgreSQL.Maximum_Open_Connections",
