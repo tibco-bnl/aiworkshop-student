@@ -21,8 +21,7 @@ This approach is suitable for small RDS-style environments (e.g., ~6 users).
 2. Populate `/etc/skel` with safe user-level defaults
 3. Set **system-wide GNOME (dconf) defaults**
 4. Create users normally with `adduser`
-5. Validate xrdp session behavior
-6. (Optional) Lock down critical desktop settings
+5. (Optional) Lock down critical desktop settings
 
 
 ## Step 0: No changes required to Template User
@@ -114,42 +113,52 @@ Usernames will be generated in a prefix-number pattern (i.e. user-1).<br>
 By setting the following variables the name and number of users can be customized.<br>
 A default password is also configurable.
 
-``` bash
+### Create one or more users using the provided script
 
-#!/bin/bash
+Use the script in this repository to create workshop users directly on the student workstation.
 
-export USER_NAME_PREFIX="user"
-export USER_NUMBER_START=1
-export USER_COUNT=2
-export USER_PASSWORD="Tibco@Demo2026"
+Script location:
 
-USER_NUMBER_END=$((USER_NUMBER_START+$USER_COUNT-1))
-
-for i in $(seq -w $USER_NUMBER_START $USER_NUMBER_END); do
-    USERNAME="$USER_NAME_PREFIX$i"
-    echo "Creating user: $USERNAME"
-
-    # Create user with home directory
-    sudo useradd -m -s /bin/bash "$USERNAME"
-
-    # Set password
-    echo "$USERNAME:$USER_PASSWORD" | sudo chpasswd
-
-    # Add user to useful groups
-    sudo usermod -aG tibco,users,sudo "$USERNAME"
-
-    # Create desktop directory for RDP access
-    sudo -u "$USERNAME" mkdir -p /home/"$USERNAME"/Desktop
-    sudo -u "$USERNAME" mkdir -p /home/"$USERNAME"/Documents
-    sudo -u "$USERNAME" mkdir -p /home/"$USERNAME"/Downloads
-
-    # Set proper ownership
-    sudo chown -R "$USERNAME":"$USERNAME" /home/"$USERNAME"
-    echo "User $USERNAME created successfully"
-done
-
-
+```bash
+setup/student-workstation/code/scripts/create-user.sh
 ```
+
+From the repository root, run:
+
+```bash
+chmod +x setup/student-workstation/code/scripts/create-user.sh
+./setup/student-workstation/code/scripts/create-user.sh --help
+```
+
+Create one user (defaults):
+
+```bash
+./setup/student-workstation/code/scripts/create-user.sh
+```
+
+Default behavior:
+
+* Prefix: `user`
+* Start number: `1`
+* Count: `1`
+* Password: `Tibco2026`
+* Resulting username format: zero-padded, e.g. `user01`
+
+Create multiple users (example):
+
+```bash
+./setup/student-workstation/code/scripts/create-user.sh -p participant -s 1 -c 6 -P 'Tibco2026'
+```
+
+This creates: `participant01` to `participant06`.
+
+Available options:
+
+* `-p`, `--prefix`: user name prefix
+* `-s`, `--start`: starting number
+* `-c`, `--count`: number of users
+* `-P`, `--password`: password for created users
+* `-h`, `--help`: show usage
 
 Each user will receive:
 
@@ -160,32 +169,7 @@ Each user will receive:
 
 ---
 
-## Step 5: Validate xrdp Session Configuration
-
-Ensure xrdp launches the correct desktop session.
-
-### Per-User Session (Optional)
-
-```bash
-echo "gnome-session" > ~/.xsession
-```
-
-### System-Wide Default
-
-```bash
-sudo update-alternatives --config x-session-manager
-```
-
-Verify services:
-
-```bash
-sudo systemctl status xrdp
-sudo systemctl status xrdp-sesman
-```
-
----
-
-## Step 6 (Optional): Lock Down Desktop Settings
+## Step 5 (Optional): Lock Down Desktop Settings
 
 To prevent users from changing critical desktop settings, use dconf locks.
 
