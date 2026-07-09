@@ -24,6 +24,7 @@
         "serverVersion": "1.0.0",
         "serverType": "HTTP",
         "serverPort": "8080",
+        "statelessServer": false,
         "serverEndpointPath": "/mcp",
         "enableTLS": false,
         "serverCertificate": "",
@@ -39,7 +40,11 @@
             "handlerType": "Tool",
             "resourceUri": "",
             "handlerName": "GetCustomers",
-            "handlerDescription": "Get the collection of customers"
+            "handlerDescription": "Get the collection of customers",
+            "readOnlyToolHint": false,
+            "destructiveToolHint": false,
+            "idempotentToolHint": false,
+            "openWorldToolHint": true
           },
           "action": {
             "ref": "github.com/project-flogo/flow",
@@ -78,7 +83,11 @@
             "handlerType": "Tool",
             "resourceUri": "",
             "handlerName": "GetProducts",
-            "handlerDescription": "Get a list of all available products"
+            "handlerDescription": "Get a list of all available products",
+            "readOnlyToolHint": false,
+            "destructiveToolHint": false,
+            "idempotentToolHint": false,
+            "openWorldToolHint": true
           },
           "action": {
             "ref": "github.com/project-flogo/flow",
@@ -117,7 +126,11 @@
             "handlerType": "Tool",
             "resourceUri": "",
             "handlerName": "GetOrders",
-            "handlerDescription": "Get a list of orders for a specific customerID"
+            "handlerDescription": "Get a list of orders for a specific customerID",
+            "readOnlyToolHint": false,
+            "destructiveToolHint": false,
+            "idempotentToolHint": false,
+            "openWorldToolHint": true
           },
           "action": {
             "ref": "github.com/project-flogo/flow",
@@ -159,7 +172,11 @@
             "handlerType": "Tool",
             "resourceUri": "",
             "handlerName": "GetOrderItems",
-            "handlerDescription": "Get a list of orders items for a specific orderID"
+            "handlerDescription": "Get a list of orders items for a specific orderID",
+            "readOnlyToolHint": false,
+            "destructiveToolHint": false,
+            "idempotentToolHint": false,
+            "openWorldToolHint": true
           },
           "action": {
             "ref": "github.com/project-flogo/flow",
@@ -299,7 +316,7 @@
                   }
                 ],
                 "RuntimeQuery": "",
-                "State": "dca767ff-0f41-4b13-b63f-ec258b79cb77SELECT * \n  FROM public.customers \n  ORDER BY customer_id ASC;"
+                "State": "77fd8ffb-cf36-4058-b3af-f5d71f09242fSELECT * \n  FROM public.customers \n  ORDER BY customer_id ASC;"
               },
               "schemas": {
                 "input": {
@@ -343,22 +360,26 @@
           "input": [
             {
               "name": "arguments",
-              "type": "any"
+              "type": "object"
+            },
+            {
+              "name": "httpHeaders",
+              "type": "params"
             }
           ],
           "output": [
             {
-              "name": "toolResult",
+              "name": "response",
               "type": "object",
               "schema": {
                 "type": "json",
-                "value": "{\"data\":{\"type\":\"string\"},\"error\":{\"type\":\"string\"},\"success\":{\"type\":\"boolean\"}}"
+                "value": "{\"data\":{\"type\":\"string\"},\"error\":{\"type\":\"string\"}}"
               }
             }
           ],
           "fe_metadata": {
-            "input": "{\"type\":\"object\",\"title\":\"MCPServer\",\"properties\":{\"arguments\":{\"type\":\"any\",\"required\":false}}}",
-            "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"toolResult\":{\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"string\"},\"error\":{\"type\":\"string\"},\"success\":{\"type\":\"boolean\"}}}},\"required\":[]}"
+            "input": "{\"type\":\"object\",\"title\":\"MCPServer\",\"properties\":{\"arguments\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"httpHeaders\":{\"type\":\"params\"}}}",
+            "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"response\":{\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"string\"},\"error\":{\"type\":\"string\"}}}},\"required\":[\"response\"]}"
           }
         }
       }
@@ -456,7 +477,7 @@
                   }
                 ],
                 "RuntimeQuery": "",
-                "State": "97f607b7-9982-4692-95ee-a1d3b2dbfe33SELECT * FROM public.products\nORDER BY product_id ASC;"
+                "State": "6d65d7e6-eb28-4196-897f-c92d677d9ce9SELECT * FROM public.products\nORDER BY product_id ASC;"
               },
               "schemas": {
                 "input": {
@@ -620,7 +641,7 @@
                   }
                 ],
                 "RuntimeQuery": "",
-                "State": "c2917589-d6a7-4a75-b3cd-ea29a18577b2SELECT * FROM public.orders where customer_id=?customerid\nORDER BY order_id ASC;",
+                "State": "301434f3-e904-4858-90e8-80dbb5ee6740SELECT * FROM public.orders where customer_id=?customerid\nORDER BY order_id ASC;",
                 "input": {
                   "mapping": {
                     "parameters": {
@@ -788,7 +809,7 @@
                   }
                 ],
                 "RuntimeQuery": "",
-                "State": "3ae57ff3-1ddb-4c30-a834-eda91377410fSELECT * FROM public.order_items where order_id=?orderid\nORDER BY order_item_id ASC;",
+                "State": "8658c6cd-cb70-4eea-bc28-d860da25d08dSELECT * FROM public.order_items where order_id=?orderid\nORDER BY order_item_id ASC;",
                 "input": {
                   "mapping": {
                     "parameters": {
@@ -888,7 +909,7 @@
     {
       "name": "PostgreSQL.PostgreSQL.Password",
       "type": "string",
-      "value": "SECRET:GWqneE/Ita0TvfhYiqxdmcTIXNITEv7H"
+      "value": "SECRET:S59meaQmL5Ni4k5Bs2IE4PI4jWFqmwMJ"
     },
     {
       "name": "PostgreSQL.PostgreSQL.Maximum_Open_Connections",
@@ -951,7 +972,7 @@
       }
     }
   },
-  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1tY3Avc3JjL2FwcC9NQ1AiLCJpZCI6Ik1DUCIsInZlcnNpb24iOiIxLjAuMSIsInRhZyI6IjEuMC4xLWIwMiIsIm5hbWUiOiJNb2RlbCBDb250ZXh0IFByb3RvY29sIChNQ1ApIiwiczNsb2NhdGlvbiI6IlRpYmNvL01DUCIsImlzVXNlckV4dGVuc2lvbiI6ZmFsc2V9LHsicmVmIjoiZ2l0aHViLmNvbS90aWJjby93aS1wb3N0Z3Jlcy9zcmMvYXBwL1Bvc3RncmVTUUwiLCJpZCI6IlBvc3RncmVTUUwiLCJ2ZXJzaW9uIjoiMi43LjEiLCJ0YWciOiIyLjcuMS1iMDEiLCJuYW1lIjoiUG9zdGdyZVNRTCIsInMzbG9jYXRpb24iOiJUaWJjby9Qb3N0Z3JlU1FMIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX1d",
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1tY3Avc3JjL2FwcC9NQ1AiLCJpZCI6Ik1DUCIsInZlcnNpb24iOiIxLjAuMiIsInRhZyI6IjEuMC4yLWIwMSIsIm5hbWUiOiJNb2RlbCBDb250ZXh0IFByb3RvY29sIChNQ1ApIiwiczNsb2NhdGlvbiI6IlRpYmNvL01DUCIsImlzVXNlckV4dGVuc2lvbiI6ZmFsc2V9LHsicmVmIjoiZ2l0aHViLmNvbS90aWJjby93aS1wb3N0Z3Jlcy9zcmMvYXBwL1Bvc3RncmVTUUwiLCJpZCI6IlBvc3RncmVTUUwiLCJ2ZXJzaW9uIjoiMi43LjEiLCJ0YWciOiIyLjcuMS1iMDEiLCJuYW1lIjoiUG9zdGdyZVNRTCIsInMzbG9jYXRpb24iOiJUaWJjby9Qb3N0Z3JlU1FMIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX1d",
   "metadata": {
     "endpoints": [
       {
@@ -961,6 +982,6 @@
         "type": "public"
       }
     ],
-    "flogoVersion": "2.26.2"
+    "flogoVersion": "2.26.3"
   }
 }
