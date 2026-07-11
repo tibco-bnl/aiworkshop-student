@@ -909,7 +909,7 @@
     {
       "name": "PostgreSQL.PostgreSQL.Password",
       "type": "string",
-      "value": "SECRET:S59meaQmL5Ni4k5Bs2IE4PI4jWFqmwMJ"
+      "value": "SECRET:xxx"
     },
     {
       "name": "PostgreSQL.PostgreSQL.Maximum_Open_Connections",
